@@ -3,7 +3,7 @@
 use strict;
 use DBI;
 
-my $dbh = DBI->connect( q{dbi:Pg:dbname=puffer;host=35.236.47.112}, q{puffer}, $ENV{PUFFER_PORTAL_DB_KEY} ) or die qq{$DBI::errstr};
+my $dbh = DBI->connect( q{dbi:Pg:dbname=puffer;host=127.0.0.1}, q{puffer}, '123456' ) or die qq{$DBI::errstr};
 
 my $h = $dbh->selectall_hashref( q{SELECT * FROM puffer_experiment}, q{id} ) or die qq{$DBI::errstr};
 

@@ -192,8 +192,8 @@ class Parser {
             // can't read directly into optional
             string channel, format;
             float ssim_index;
-            uint32_t delivery_rate, expt_id, size, cwnd, in_flight, min_rtt, rtt;
-            
+            uint32_t  expt_id, size, cwnd, in_flight, min_rtt, rtt;
+            uint64_t delivery_rate;
             // ignore column labels
             getline(video_sent_file, line_storage);
 
@@ -304,6 +304,7 @@ class Parser {
                             mean_delivery_rate, average_bitrate, ssim_variation] = video_summarize(unpacked_stream_id);
                 const double mean_ssim = ssim_sum == -1 ? -1 : ssim_sum / normal_ssim_chunks;
                 const size_t high_ssim_chunks = total_chunks - normal_ssim_chunks;
+                cerr << "ofir" << endl;
 
                 if (mean_delivery_rate < 0 ) {
                     missing_video_stats++;
@@ -391,11 +392,13 @@ class Parser {
                 } else {
                     num_ssim_var_samples--; // for ssim_var, ignore pair containing chunk with SSIM == 1
                 }
+                // cerr << videosent.size.value() << endl;
 
                 ssim_last_db = ssim_cur_db;
 
                 delivery_rate_sum += videosent.delivery_rate.value();
-                bytes_sent_sum += videosent.size.value();
+                // bytes_sent_sum += videosent.size.value();
+                cerr << "end item in loop2" << endl;
             }
 
             const double average_bitrate = 8 * bytes_sent_sum / (2.002 * chunk_stream.size());

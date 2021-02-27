@@ -357,9 +357,9 @@ std::ostream& operator<< (std::ostream& out, const Sysinfo& s) {
 
 struct VideoSent {
     optional<float> ssim_index{};
-    optional<uint32_t> delivery_rate{}, expt_id{}, init_id{}, first_init_id{}, user_id{}, size{},
+    optional<uint32_t>  expt_id{}, init_id{}, first_init_id{}, user_id{}, size{},
     format{}, cwnd{}, in_flight{}, min_rtt{}, rtt{};
-    optional<uint64_t> video_ts{};
+    optional<uint64_t> delivery_rate{}, video_ts{};
 
     // Comma-separated anonymous keys and values (to be dumped).
     static string anon_keys() { 
@@ -451,7 +451,7 @@ struct VideoSent {
         } else if (key == "ssim_index"sv) {
             set_unique( ssim_index, to_float(value) );
         } else if (key == "delivery_rate"sv) {
-            set_unique( delivery_rate, influx_integer<uint32_t>( value ) );
+            set_unique( delivery_rate, influx_integer<uint64_t>( value ) );
         } else if (key == "size"sv) {
             set_unique( size, influx_integer<uint32_t>( value ) );
         } else if (key == "video_ts"sv) {

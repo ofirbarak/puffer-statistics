@@ -18,7 +18,7 @@ main() {
     cd "$LOCAL_DATA_PATH"/"$END_DATE" 
     readonly end_date_prefix=${END_DATE:0:10}
     
-    readonly CHUNK_LEN=30
+    readonly CHUNK_LEN=1
     # 1. Generate STREAM stats for desired day 
     stream_stats
     
@@ -94,7 +94,7 @@ get_period_intersection() {
     let "nknown_days=ndays - CHUNK_LEN" || true
     local last_chunk_day=$(date -I -d "$end_date_prefix - $nknown_days days")
     "$STATS_REPO_PATH"/scripts/get_period_stream_stats.sh $last_chunk_day $CHUNK_LEN
-
+    
     # 2. Get filenames of stream stats over the period
     # 2a. Get dates
     unset period_dates
@@ -104,6 +104,7 @@ get_period_intersection() {
         exit 1
     fi
 
+    echo hiiiiiiiii
     # 2b. Map dates to filenames, for convenience
     declare -a period_stream_stats_files
     for i in ${!period_dates[@]}; do
@@ -143,7 +144,7 @@ get_period_intersection() {
         >&2 echo "Error generating scheme intersection ($1); stream_stats_to_metadata exited unsuccessfully
                   or never started (see $intx_err)" 
         rm -f "$duration_scheme_intersection" 
-        exit 1
+        # exit 1
     fi
 }
 
@@ -174,7 +175,7 @@ metadata() {
     schemes=${schemes%?} # remove trailing comma 
     # Only needed to get desired schemes
     rm "$desired_schemes" 
-
+    
     # Experiment duration is unknown, so can't anticipate how many stream stats
     # need to be downloaded (since the stream stats are needed to determine duration). 
     # So, download and compute intersection in 30-day chunks, stopping when a

@@ -4,15 +4,15 @@
 # Creates local data directory with watch times, in pwd.
 
 # 1. Clone puffer-statistics/data-release 
-git clone https://github.com/StanfordSNR/puffer-statistics.git 
+#git clone https://github.com/StanfordSNR/puffer-statistics.git 
 pushd puffer-statistics
 
 # 2. Install dependencies
 scripts/deps.sh
 
 # 3. Build 
-./autogen.sh
-./configure
+#./autogen.sh
+#./configure
 make -j$(nproc)
 sudo make install
 popd
